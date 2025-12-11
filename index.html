@@ -1,0 +1,2571 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ডাবল এন্ট্রি অ্যাকাউন্টিং গেম - ইস্রাফিল আজাদ</title>
+  <style>
+    /* সাধারণ স্টাইল */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      text-align: center;
+      line-height: 1.6;
+      color: #333;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    /* হেডিং স্টাইল */
+    h1 {
+      background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+      color: white;
+      padding: 20px;
+      margin: 0 0 30px 0;
+      border-radius: 15px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      font-size: 2.2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, #fbbf24, #f59e0b);
+    }
+    
+    h2 {
+      margin-top: 30px;
+      color: #1e3a8a;
+      padding-bottom: 10px;
+      border-bottom: 3px solid #3b82f6;
+      display: inline-block;
+      font-size: 1.8rem;
+    }
+    
+    h3 {
+      color: #1e3a8a;
+      margin-bottom: 15px;
+      font-size: 1.4rem;
+    }
+    
+    /* টেবিল স্টাইল */
+    table {
+      margin: 20px auto;
+      border-collapse: collapse;
+      width: 100%;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease;
+    }
+    
+    table:hover {
+      transform: translateY(-5px);
+    }
+    
+    th, td {
+      border: 1px solid #e2e8f0;
+      padding: 14px;
+      text-align: center;
+    }
+    
+    th {
+      background: linear-gradient(135deg, #3b82f6, #1e40af);
+      color: white;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+    
+    tr:hover {
+      background-color: #f1f5f9;
+    }
+    
+    /* ফর্ম উপাদান স্টাইল */
+    .transaction-card {
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      margin: 25px auto;
+      max-width: 800px;
+      transition: all 0.3s ease;
+      border-left: 5px solid #3b82f6;
+    }
+    
+    .transaction-card:hover {
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .transaction-text {
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin-bottom: 25px;
+      color: #1e3a8a;
+      line-height: 1.5;
+    }
+    
+    select, button {
+      padding: 12px 18px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      margin: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    select {
+      width: 220px;
+      background-color: #f9fafb;
+    }
+    
+    select:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+    
+    button {
+      background: linear-gradient(135deg, #3b82f6, #1e40af);
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      border: none;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    button:hover {
+      background: linear-gradient(135deg, #1e40af, #1e3a8a);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    }
+    
+    button:active {
+      transform: translateY(0);
+    }
+    
+    button.secondary {
+      background: linear-gradient(135deg, #6b7280, #4b5563);
+    }
+    
+    button.secondary:hover {
+      background: linear-gradient(135deg, #4b5563, #374151);
+    }
+    
+    button.success {
+      background: linear-gradient(135deg, #10b981, #059669);
+    }
+    
+    button.success:hover {
+      background: linear-gradient(135deg, #059669, #047857);
+    }
+    
+    button.warning {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+    }
+    
+    button.warning:hover {
+      background: linear-gradient(135deg, #d97706, #b45309);
+    }
+    
+    button.danger {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+    }
+    
+    button.danger:hover {
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+    }
+    
+    /* ফলাফল স্টাইল */
+    #result {
+      font-size: 1.1rem;
+      margin-top: 20px;
+      min-height: 60px;
+      padding: 15px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .correct {
+      background-color: #d1fae5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+    
+    .wrong {
+      background-color: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fca5a5;
+    }
+    
+    .score-display {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #1e40af;
+      margin: 25px 0;
+      padding: 15px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      display: inline-block;
+      min-width: 200px;
+    }
+    
+    /* কন্ট্রোল প্যানেল */
+    .control-panel {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      margin: 25px auto;
+      max-width: 800px;
+      border-left: 5px solid #f59e0b;
+    }
+    
+    .game-mode {
+      margin-bottom: 20px;
+    }
+    
+    .timer {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #dc2626;
+      margin: 15px 0;
+      padding: 10px;
+      background: #fef2f2;
+      border-radius: 8px;
+      display: inline-block;
+    }
+    
+    /* অগ্রগতি ড্যাশবোর্ড */
+    .progress-dashboard {
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      margin: 25px auto;
+      max-width: 800px;
+      border-left: 5px solid #10b981;
+    }
+    
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    
+    .stat {
+      margin: 15px;
+      padding: 20px;
+      background: #f8fafc;
+      border-radius: 12px;
+      min-width: 160px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease;
+    }
+    
+    .stat:hover {
+      transform: translateY(-5px);
+    }
+    
+    .stat-label {
+      display: block;
+      font-size: 1rem;
+      color: #6b7280;
+      margin-bottom: 8px;
+    }
+    
+    .stat-value {
+      display: block;
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #1e40af;
+    }
+    
+    /* প্রগ্রেস বার */
+    .progress-bar {
+      width: 100%;
+      height: 20px;
+      background-color: #e5e7eb;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 20px 0;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #10b981, #34d399);
+      transition: width 0.5s ease;
+      border-radius: 10px;
+    }
+    
+    /* শিক্ষামূলক বিভাগ */
+    .educational-section {
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      margin: 25px auto;
+      max-width: 800px;
+      text-align: left;
+      border-left: 5px solid #8b5cf6;
+    }
+    
+    .rules ul {
+      padding-left: 25px;
+    }
+    
+    .rules li {
+      margin-bottom: 12px;
+      padding-left: 10px;
+    }
+    
+    /* হিন্ট স্টাইল */
+    .hint-section {
+      background: linear-gradient(135deg, #dbeafe, #e0f2fe);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+      border-left: 4px solid #3b82f6;
+    }
+    
+    /* ডেটা ম্যানেজমেন্ট */
+    .data-management-buttons {
+      margin: 30px 0;
+      padding: 25px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      border: 2px dashed #cbd5e1;
+    }
+    
+    /* একশন বাটন */
+    .action-buttons {
+      margin: 25px 0;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    
+    /* ক্রেডিট সেকশন */
+    .credit-section {
+      text-align: center;
+      margin: 60px 0 40px 0;
+      padding: 50px 30px;
+      background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+      color: white;
+      border-radius: 20px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+      border: 3px solid #fbbf24;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .credit-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+      background-size: cover;
+    }
+    
+    /* নোটিফিকেশন অ্যানিমেশন */
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    
+    @keyframes celebrate {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    /* রেস্পন্সিভ ডিজাইন */
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      h1 {
+        font-size: 1.8rem;
+        padding: 15px;
+      }
+      
+      select {
+        width: 100%;
+        margin-bottom: 15px;
+      }
+      
+      table {
+        font-size: 0.9rem;
+      }
+      
+      th, td {
+        padding: 10px;
+      }
+      
+      .stats {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .stat {
+        width: 80%;
+      }
+      
+      .action-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      button {
+        width: 100%;
+        margin: 5px 0;
+      }
+    }
+    
+    /* ব্যালেন্স শীটের জন্য বিশেষ স্টাইল */
+    #balance th, #balance td {
+      text-align: left;
+    }
+    
+    .financial-section {
+      margin-bottom: 40px;
+    }
+    
+    /* কাস্টম স্ক্রলবার */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, #3b82f6, #1e40af);
+      border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(135deg, #1e40af, #1e3a8a);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📘 ডাবল এন্ট্রি অ্যাকাউন্টিং গেম</h1>
+    
+    <!-- গেম কন্ট্রোল প্যানেল -->
+    <div class="control-panel">
+      <h3>গেম সেটিংস</h3>
+      
+      <div class="game-mode">
+        <label>গেম মোড:</label>
+        <select id="gameMode" onchange="setGameMode(this.value)">
+          <option value="beginner">শিক্ষানবিস</option>
+          <option value="intermediate">মধ্যমস্তর</option>
+          <option value="expert">দক্ষ</option>
+        </select>
+      </div>
+      
+      <div class="timer" id="timerSection" style="display: none;">
+        ⏰ সময় বাকি: <span id="timeLeft">0</span> সেকেন্ড
+      </div>
+    </div>
+    
+    <!-- স্কোর প্রদর্শন -->
+    <div class="score-display">🔢 স্কোর: <span id="score">0</span></div>
+    
+    <!-- অগ্রগতি ড্যাশবোর্ড -->
+    <div class="progress-dashboard">
+      <h3>📊 আপনার অগ্রগতি</h3>
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-label">সঠিকতা:</span>
+          <span class="stat-value" id="accuracy">0%</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">লাগাতার সফলতা:</span>
+          <span class="stat-value" id="streak">0</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">সর্বোচ্চ সফলতা:</span>
+          <span class="stat-value" id="bestStreak">0</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">মোট চেষ্টা:</span>
+          <span class="stat-value" id="totalAttempted">0</span>
+        </div>
+      </div>
+      
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+      </div>
+    </div>
+    
+    <!-- শিক্ষামূলক বিভাগ -->
+    <div class="educational-section">
+      <h2>📚 ডাবল এন্ট্রি অ্যাকাউন্টিং বেসিক</h2>
+      <div class="rules">
+        <h3>মৌলিক নিয়ম:</h3>
+        <ul>
+          <li>✅ প্রতিটি লেনদেনে কমপক্ষে দুইটি অ্যাকাউন্ট প্রভাবিত হয়</li>
+          <li>✅ ডেবিট = বাম পাশ, ক্রেডিট = ডান পাশ</li>
+          <li>✅ সম্পদ বৃদ্ধি = ডেবিট, সম্পদ হ্রাস = ক্রেডিট</li>
+          <li>✅ দায় বৃদ্ধি = ক্রেডিট, দায় হ্রাস = ডেবিট</li>
+          <li>✅ আয় বৃদ্ধি = ক্রেডিট, ব্যয় বৃদ্ধি = ডেবিট</li>
+        </ul>
+      </div>
+      
+      <div class="hint-section" id="hintSection" style="display: none;">
+        <h4>💡 সহায়তা:</h4>
+        <p id="hintText"></p>
+      </div>
+    </div>
+    
+    <!-- লেনদেন বিভাগ -->
+    <div class="transaction-card">
+      <p class="transaction-text"><b>লেনদেন:</b> <span id="transaction"></span></p>
+      
+      <select id="debit">
+        <option value="">ডেবিট অ্যাকাউন্ট নির্বাচন করুন</option>
+        <option>Cash</option>
+        <option>Bank</option>
+        <option>Rent Expense</option>
+        <option>Salary Expense</option>
+        <option>Office Expense</option>
+        <option>Sales</option>
+        <option>Capital</option>
+        <option>Furniture</option>
+        <option>Accounts Receivable</option>
+        <option>Accounts Payable</option>
+        <option>Bank Loan</option>
+        <option>Vehicle</option>
+        <option>Prepaid Insurance</option>
+        <option>Inventory</option>
+        <option>Service Revenue</option>
+        <option>Utilities Expense</option>
+        <option>Drawings</option>
+        <option>Interest Expense</option>
+        <option>Cost of Goods Sold</option>
+        <option>Building</option>
+        <option>Mortgage Loan</option>
+        <option>Advertising Expense</option>
+        <option>Equipment</option>
+        <option>Rental Income</option>
+        <option>Inventory Loss</option>
+        <option>Depreciation Expense</option>
+        <option>Accumulated Depreciation</option>
+        <option>Unearned Revenue</option>
+        <option>Supplies Expense</option>
+        <option>Interest Income</option>
+        <option>Donation Expense</option>
+        <option>Share Capital</option>
+      </select>
+      
+      <select id="credit">
+        <option value="">ক্রেডিট অ্যাকাউন্ট নির্বাচন করুন</option>
+        <option>Cash</option>
+        <option>Bank</option>
+        <option>Rent Expense</option>
+        <option>Salary Expense</option>
+        <option>Office Expense</option>
+        <option>Sales</option>
+        <option>Capital</option>
+        <option>Furniture</option>
+        <option>Accounts Receivable</option>
+        <option>Accounts Payable</option>
+        <option>Bank Loan</option>
+        <option>Vehicle</option>
+        <option>Prepaid Insurance</option>
+        <option>Inventory</option>
+        <option>Service Revenue</option>
+        <option>Utilities Expense</option>
+        <option>Drawings</option>
+        <option>Interest Expense</option>
+        <option>Cost of Goods Sold</option>
+        <option>Building</option>
+        <option>Mortgage Loan</option>
+        <option>Advertising Expense</option>
+        <option>Equipment</option>
+        <option>Rental Income</option>
+        <option>Inventory Loss</option>
+        <option>Depreciation Expense</option>
+        <option>Accumulated Depreciation</option>
+        <option>Unearned Revenue</option>
+        <option>Supplies Expense</option>
+        <option>Interest Income</option>
+        <option>Donation Expense</option>
+        <option>Share Capital</option>
+      </select>
+      
+      <br>
+      <button onclick="checkAnswer()">জমা দিন</button>
+      <p id="result"></p>
+    </div>
+    
+    <!-- ডেটা ম্যানেজমেন্ট -->
+    <div class="data-management-buttons">
+      <h3>💾 ডেটা ম্যানেজমেন্ট</h3>
+      <button class="success" onclick="saveGameData()">💾 ডেটা সেভ করুন</button>
+      <button class="warning" onclick="loadGameData()">📂 ডেটা লোড করুন</button>
+      <button class="danger" onclick="clearGameData()">🗑️ ডেটা ডিলিট করুন</button>
+      <button class="warning" onclick="exportData()">📤 ডেটা এক্সপোর্ট</button>
+      <button class="success" onclick="importData()">📥 ডেটা ইম্পোর্ট</button>
+      
+      <!-- ডেটা ইম্পোর্টের জন্য hidden file input -->
+      <input type="file" id="importFile" accept=".json" style="display: none;" onchange="handleFileImport(this.files)">
+      
+      <div style="margin-top: 15px; font-size: 14px; color: #64748b;">
+        <p>💡 <strong>অটো-সেভ:</strong> আপনার ডেটা স্বয়ংক্রিয়ভাবে সংরক্ষণ হয়</p>
+        <p>⚠️ <strong>সতর্কতা:</strong> ডেটা শুধু এই ব্রাউজারে সংরক্ষিত হবে</p>
+      </div>
+    </div>
+    
+    <!-- একশন বাটন -->
+    <div class="action-buttons">
+      <button class="secondary" onclick="resetGame()">🔄 গেম রিসেট</button>
+      <button class="success" onclick="shareResults()">📤 ফলাফল শেয়ার করুন</button>
+      <button onclick="showHint()">💡 সহায়তা নিন</button>
+    </div>
+    
+    <!-- জার্নাল এন্ট্রি -->
+    <div class="financial-section">
+      <h2>📜 জার্নাল এন্ট্রি</h2>
+      <table id="journal">
+        <thead>
+          <tr>
+            <th>তারিখ</th>
+            <th>অ্যাকাউন্ট</th>
+            <th>ডেবিট (৳)</th>
+            <th>ক্রেডিট (৳)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- জার্নাল এন্ট্রি এখানে যোগ হবে -->
+        </tbody>
+      </table>
+    </div>
+    
+    <!-- ট্রায়াল ব্যালেন্স -->
+    <div class="financial-section">
+      <h2>📊 ট্রায়াল ব্যালেন্স</h2>
+      <table id="trial">
+        <thead>
+          <tr>
+            <th>অ্যাকাউন্ট</th>
+            <th>ডেবিট (৳)</th>
+            <th>ক্রেডিট (৳)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Cash</td><td id="cashD">0</td><td id="cashC">0</td></tr>
+          <tr><td>Bank</td><td id="bankD">0</td><td id="bankC">0</td></tr>
+          <tr><td>Sales</td><td id="salesD">0</td><td id="salesC">0</td></tr>
+          <tr><td>Rent Expense</td><td id="rentD">0</td><td id="rentC">0</td></tr>
+          <tr><td>Salary Expense</td><td id="salaryD">0</td><td id="salaryC">0</td></tr>
+          <tr><td>Office Expense</td><td id="officeD">0</td><td id="officeC">0</td></tr>
+          <tr><td>Capital</td><td id="capitalD">0</td><td id="capitalC">0</td></tr>
+          <tr><td>Furniture</td><td id="furnitureD">0</td><td id="furnitureC">0</td></tr>
+          <tr><td>Accounts Receivable</td><td id="arD">0</td><td id="arC">0</td></tr>
+          <tr><td>Accounts Payable</td><td id="apD">0</td><td id="apC">0</td></tr>
+          <tr><td>Bank Loan</td><td id="bankLoanD">0</td><td id="bankLoanC">0</td></tr>
+          <tr><td>Vehicle</td><td id="vehicleD">0</td><td id="vehicleC">0</td></tr>
+          <tr><td>Prepaid Insurance</td><td id="prepaidInsD">0</td><td id="prepaidInsC">0</td></tr>
+          <tr><td>Inventory</td><td id="inventoryD">0</td><td id="inventoryC">0</td></tr>
+          <tr><td>Service Revenue</td><td id="serviceRevD">0</td><td id="serviceRevC">0</td></tr>
+          <tr><td>Utilities Expense</td><td id="utilitiesD">0</td><td id="utilitiesC">0</td></tr>
+          <tr><td>Drawings</td><td id="drawingsD">0</td><td id="drawingsC">0</td></tr>
+          <tr><td>Interest Expense</td><td id="interestExpD">0</td><td id="interestExpC">0</td></tr>
+          <tr><td>Cost of Goods Sold</td><td id="cogsD">0</td><td id="cogsC">0</td></tr>
+          <tr><td>Building</td><td id="buildingD">0</td><td id="buildingC">0</td></tr>
+          <tr><td>Mortgage Loan</td><td id="mortgageD">0</td><td id="mortgageC">0</td></tr>
+          <tr><td>Advertising Expense</td><td id="advertisingD">0</td><td id="advertisingC">0</td></tr>
+          <tr><td>Equipment</td><td id="equipmentD">0</td><td id="equipmentC">0</td></tr>
+          <tr><td>Rental Income</td><td id="rentalIncD">0</td><td id="rentalIncC">0</td></tr>
+          <tr><td>Inventory Loss</td><td id="inventoryLossD">0</td><td id="inventoryLossC">0</td></tr>
+          <tr><td>Depreciation Expense</td><td id="depreciationD">0</td><td id="depreciationC">0</td></tr>
+          <tr><td>Accumulated Depreciation</td><td id="accDepreciationD">0</td><td id="accDepreciationC">0</td></tr>
+          <tr><td>Unearned Revenue</td><td id="unearnedRevD">0</td><td id="unearnedRevC">0</td></tr>
+          <tr><td>Supplies Expense</td><td id="suppliesD">0</td><td id="suppliesC">0</td></tr>
+          <tr><td>Interest Income</td><td id="interestIncD">0</td><td id="interestIncC">0</td></tr>
+          <tr><td>Donation Expense</td><td id="donationD">0</td><td id="donationC">0</td></tr>
+          <tr><td>Share Capital</td><td id="shareCapitalD">0</td><td id="shareCapitalC">0</td></tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <!-- আয় বিবরণী -->
+    <div class="financial-section">
+      <h2>📈 আয় বিবরণী</h2>
+      <table id="income">
+        <thead>
+          <tr>
+            <th>বিবরণ</th>
+            <th>পরিমাণ (৳)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>বিক্রয় আয়</td>
+            <td id="incSales">0</td>
+          </tr>
+          <tr>
+            <td>সেবা আয়</td>
+            <td id="incService">0</td>
+          </tr>
+          <tr>
+            <td>ভাড়া আয়</td>
+            <td id="incRental">0</td>
+          </tr>
+          <tr>
+            <td>সুদ আয়</td>
+            <td id="incInterest">0</td>
+          </tr>
+          <tr>
+            <td><strong>মোট আয়</strong></td>
+            <td id="totalIncome">0</td>
+          </tr>
+          <tr>
+            <td>ভাড়া ব্যয়</td>
+            <td id="incRent">0</td>
+          </tr>
+          <tr>
+            <td>বেতন ব্যয়</td>
+            <td id="incSalary">0</td>
+          </tr>
+          <tr>
+            <td>অফিস ব্যয়</td>
+            <td id="incOffice">0</td>
+          </tr>
+          <tr>
+            <td>পণ্য বিক্রয়ের মূল্য</td>
+            <td id="incCOGS">0</td>
+          </tr>
+          <tr>
+            <td>ইউটিলিটি ব্যয়</td>
+            <td id="incUtilities">0</td>
+          </tr>
+          <tr>
+            <td>সুদ ব্যয়</td>
+            <td id="incInterestExp">0</td>
+          </tr>
+          <tr>
+            <td>বিজ্ঞাপন ব্যয়</td>
+            <td id="incAdvertising">0</td>
+          </tr>
+          <tr>
+            <td>সরবরাহ ব্যয়</td>
+            <td id="incSupplies">0</td>
+          </tr>
+          <tr>
+            <td>অবচয় ব্যয়</td>
+            <td id="incDepreciation">0</td>
+          </tr>
+          <tr>
+            <td>দান</td>
+            <td id="incDonation">0</td>
+          </tr>
+          <tr>
+            <td><strong>মোট ব্যয়</strong></td>
+            <td id="totalExpenses">0</td>
+          </tr>
+          <tr>
+            <th>নীট লাভ / (ক্ষতি)</th>
+            <th id="netProfit">0</th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <!-- ব্যালেন্স শীট -->
+    <div class="financial-section">
+      <h2>💰 ব্যালেন্স শীট</h2>
+      <table id="balance">
+        <thead>
+          <tr>
+            <th>সম্পদ (Assets)</th>
+            <th>৳</th>
+            <th>দায় ও মূলধন (Liabilities & Equity)</th>
+            <th>৳</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>নগদ</td>
+            <td id="balCash">0</td>
+            <td>মূলধন</td>
+            <td id="balCapital">0</td>
+          </tr>
+          <tr>
+            <td>ব্যাংক</td>
+            <td id="balBank">0</td>
+            <td>প্রদেয় হিসাব</td>
+            <td id="balAP">0</td>
+          </tr>
+          <tr>
+            <td>ফার্নিচার</td>
+            <td id="balFurniture">0</td>
+            <td>ব্যাংক ঋণ</td>
+            <td id="balBankLoan">0</td>
+          </tr>
+          <tr>
+            <td>প্রাপ্য হিসাব</td>
+            <td id="balAR">0</td>
+            <td>বন্ধকী ঋণ</td>
+            <td id="balMortgage">0</td>
+          </tr>
+          <tr>
+            <td>যানবাহন</td>
+            <td id="balVehicle">0</td>
+            <td>অগ্রিম প্রাপ্তি</td>
+            <td id="balUnearnedRev">0</td>
+          </tr>
+          <tr>
+            <td>প্রিপেইড ইন্সুরেন্স</td>
+            <td id="balPrepaidIns">0</td>
+            <td>শেয়ার মূলধন</td>
+            <td id="balShareCapital">0</td>
+          </tr>
+          <tr>
+            <td>মজুদ পণ্য</td>
+            <td id="balInventory">0</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>ভবন</td>
+            <td id="balBuilding">0</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>সরঞ্জাম</td>
+            <td id="balEquipment">0</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th>মোট সম্পদ</th>
+            <th id="totalAssets">0</th>
+            <th>মোট দায় ও মূলধন</th>
+            <th id="totalLiab">0</th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ক্রেডিট সেকশন - ইস্রাফিল আজাদ -->
+    <div class="credit-section">
+      <div style="display: inline-block; background: #f59e0b; color: #1e3a8a; padding: 12px 25px; border-radius: 50px; margin-bottom: 20px; font-weight: bold; font-size: 18px; position: relative; z-index: 2;">
+        💼 সফটওয়্যার ডেভেলপার
+      </div>
+      
+      <h3 style="margin: 20px 0 15px 0; font-size: 36px; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); position: relative; z-index: 2;">
+        ইস্রাফিল আজাদ
+      </h3>
+      
+      <p style="margin: 5px 0; font-size: 20px; opacity: 0.9; position: relative; z-index: 2;">
+        ডাবল এন্ট্রি অ্যাকাউন্টিং গেম
+      </p>
+
+      <!-- যোগাযোগের কার্ড -->
+      <div style="margin: 25px auto; padding: 20px; background: rgba(255,255,255,0.15); border-radius: 15px; backdrop-filter: blur(10px); max-width: 400px; position: relative; z-index: 2;">
+        <div style="margin: 15px 0; display: flex; align-items: center; justify-content: center;">
+          <span style="font-weight: bold; margin-right: 10px;">📧</span>
+          <a href="mailto:israfil.azad@yahoo.com" style="color: #fbbf24; text-decoration: none; font-size: 16px;">
+            israfil.azad@yahoo.com
+          </a>
+        </div>
+        <div style="margin: 15px 0; display: flex; align-items: center; justify-content: center;">
+          <span style="font-weight: bold; margin-right: 10px;">👥</span>
+          <a href="https://www.facebook.com/share/1B8tjjtbqy/" target="_blank" style="color: #fbbf24; text-decoration: none; font-size: 16px;">
+            Facebook এ সংযোগ দিন
+          </a>
+        </div>
+      </div>
+
+      <p style="margin: 20px 0 0 0; font-size: 16px; opacity: 0.8; position: relative; z-index: 2; font-style: italic;">
+        "শিক্ষাকে মজাদার করার প্রয়াস"
+      </p>
+      
+      <!-- সোশ্যাল মিডিয়া বাটন -->
+      <div style="margin-top: 25px; position: relative; z-index: 2;">
+        <a href="mailto:israfil.azad@yahoo.com" style="display: inline-block; background: #f59e0b; color: #1e3a8a; padding: 12px 20px; border-radius: 25px; margin: 0 8px; text-decoration: none; font-weight: bold; transition: all 0.3s;">
+          📧 ইমেইল
+        </a>
+        <a href="https://www.facebook.com/share/1B8tjjtbqy/" target="_blank" style="display: inline-block; background: #1877F2; color: white; padding: 12px 20px; border-radius: 25px; margin: 0 8px; text-decoration: none; font-weight: bold; transition: all 0.3s;">
+          👥 ফেসবুক
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // লেনদেনের ডাটা - ৩৫টি লেনদেন
+    const transactions = [
+      { 
+        text: "নগদে পণ্য বিক্রি করা হয়েছে ৫,০০০ টাকা", 
+        debit: "Cash", 
+        credit: "Sales", 
+        amount: 5000, 
+        reason: "Cash বৃদ্ধি (ডেবিট), Sales আয় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "easy"
+      },
+      { 
+        text: "ভাড়া বাবদ ২,০০০ টাকা নগদে প্রদান করা হয়েছে", 
+        debit: "Rent Expense", 
+        credit: "Cash", 
+        amount: 2000, 
+        reason: "Rent ব্যয় (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "easy"
+      },
+      { 
+        text: "ফার্নিচার কেনা হয়েছে ৩,০০০ টাকা নগদে", 
+        debit: "Furniture", 
+        credit: "Cash", 
+        amount: 3000, 
+        reason: "Furniture সম্পদ বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "easy"
+      },
+      { 
+        text: "মালিক ব্যবসায় ১০,০০০ টাকা বিনিয়োগ করেছেন", 
+        debit: "Cash", 
+        credit: "Capital", 
+        amount: 10000, 
+        reason: "Cash বৃদ্ধি (ডেবিট), Capital বৃদ্ধি (ক্রেডিট)",
+        difficulty: "easy"
+      },
+      { 
+        text: "কাস্টমারকে ২,০০০ টাকায় পণ্য বিক্রি করা হয়েছে (ঋণে)", 
+        debit: "Accounts Receivable", 
+        credit: "Sales", 
+        amount: 2000, 
+        reason: "Accounts Receivable সম্পদ বৃদ্ধি (ডেবিট), Sales আয় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "easy"
+      },
+      { 
+        text: "কর্মচারীদের বেতন প্রদান ৪,০০০ টাকা", 
+        debit: "Salary Expense", 
+        credit: "Cash", 
+        amount: 4000, 
+        reason: "Salary ব্যয় (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "easy"
+      },
+      { 
+        text: "ব্যাংক থেকে ৮,০০০ টাকা উত্তোলন করা হয়েছে", 
+        debit: "Cash", 
+        credit: "Bank", 
+        amount: 8000, 
+        reason: "Cash বৃদ্ধি (ডেবিট), Bank হ্রাস (ক্রেডিট)",
+        difficulty: "easy"
+      },
+      { 
+        text: "সরবরাহকারীকে ৩,৫০০ টাকা প্রদান করা হয়েছে", 
+        debit: "Accounts Payable", 
+        credit: "Cash", 
+        amount: 3500, 
+        reason: "Accounts Payable হ্রাস (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "easy"
+      },
+      { 
+        text: "গ্রাহক থেকে ১,৫০০ টাকা নগদ প্রাপ্তি", 
+        debit: "Cash", 
+        credit: "Accounts Receivable", 
+        amount: 1500, 
+        reason: "Cash বৃদ্ধি (ডেবিট), Accounts Receivable হ্রাস (ক্রেডিট)",
+        difficulty: "easy"
+      },
+      { 
+        text: "ব্যবসায়িক খরচ বাবদ ১,২০০ টাকা প্রদান", 
+        debit: "Office Expense", 
+        credit: "Cash", 
+        amount: 1200, 
+        reason: "Office Expense বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "easy"
+      },
+      { 
+        text: "ব্যাংক থেকে ব্যবসায়িক ঋণ নেওয়া হয়েছে ৫০,০০০ টাকা", 
+        debit: "Cash", 
+        credit: "Bank Loan", 
+        amount: 50000, 
+        reason: "Cash বৃদ্ধি (ডেবিট), Bank Loan দায় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "easy"
+      },
+      { 
+        text: "যানবাহন কেনা হয়েছে ২৫,০০০ টাকা নগদে", 
+        debit: "Vehicle", 
+        credit: "Cash", 
+        amount: 25000, 
+        reason: "Vehicle সম্পদ বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "easy"
+      },
+      { 
+        text: "প্রিপেইড ইন্সুরেন্স কিনেছেন ১২,০০০ টাকা", 
+        debit: "Prepaid Insurance", 
+        credit: "Cash", 
+        amount: 12000, 
+        reason: "Prepaid Insurance সম্পদ বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "easy"
+      },
+      { 
+        text: "সরবরাহকারীর কাছ থেকে পণ্য ক্রয় করা হয়েছে ১৫,০০০ টাকায় (ঋণে)", 
+        debit: "Inventory", 
+        credit: "Accounts Payable", 
+        amount: 15000, 
+        reason: "Inventory সম্পদ বৃদ্ধি (ডেবিট), Accounts Payable দায় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "easy"
+      },
+      { 
+        text: "বিক্রয়ের জন্য পণ্য ক্রয় করা হয়েছে ৮,০০০ টাকা নগদে", 
+        debit: "Inventory", 
+        credit: "Cash", 
+        amount: 8000, 
+        reason: "Inventory সম্পদ বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "easy"
+      },
+      { 
+        text: "গ্রাহককে ৫,০০০ টাকার বিল পাঠানো হয়েছে", 
+        debit: "Accounts Receivable", 
+        credit: "Service Revenue", 
+        amount: 5000, 
+        reason: "Accounts Receivable সম্পদ বৃদ্ধি (ডেবিট), Service Revenue আয় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "easy"
+      },
+      { 
+        text: "বিদ্যুৎ বিল প্রদান করা হয়েছে ২,৫০০ টাকা", 
+        debit: "Utilities Expense", 
+        credit: "Cash", 
+        amount: 2500, 
+        reason: "Utilities Expense ব্যয় বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "easy"
+      },
+      { 
+        text: "মালিক ব্যক্তিগত ব্যবহারের জন্য ৩,০০০ টাকা উত্তোলন করেছেন", 
+        debit: "Drawings", 
+        credit: "Cash", 
+        amount: 3000, 
+        reason: "Drawings বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "easy"
+      },
+      { 
+        text: "ব্যাংক ঋণের সুদ প্রদান করা হয়েছে ২,০০০ টাকা", 
+        debit: "Interest Expense", 
+        credit: "Cash", 
+        amount: 2000, 
+        reason: "Interest Expense ব্যয় বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "easy"
+      },
+      { 
+        text: "বিক্রয়কৃত পণ্যের মূল্য ৬,০০০ টাকা", 
+        debit: "Cost of Goods Sold", 
+        credit: "Inventory", 
+        amount: 6000, 
+        reason: "COGS ব্যয় বৃদ্ধি (ডেবিট), Inventory সম্পদ হ্রাস (ক্রেডিট)",
+        difficulty: "easy"
+      },
+      { 
+        text: "অফিস ভবন কেনা হয়েছে ২০০,০০০ টাকায় (অর্ধেক নগদ, অর্ধেক ঋণ)", 
+        debit: "Building", 
+        credit: "Cash", 
+        amount: 100000, 
+        reason: "Building সম্পদ বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "easy"
+      },
+      { 
+        text: "অফিস ভবনের জন্য বন্ধকী ঋণ নেওয়া হয়েছে ১০০,০০০ টাকা", 
+        debit: "Cash", 
+        credit: "Mortgage Loan", 
+        amount: 100000, 
+        reason: "Cash বৃদ্ধি (ডেবিট), Mortgage Loan দায় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "easy"
+      },
+      { 
+        text: "বিজ্ঞাপন বাবদ খরচ হয়েছে ৪,৫০০ টাকা", 
+        debit: "Advertising Expense", 
+        credit: "Cash", 
+        amount: 4500, 
+        reason: "Advertising Expense ব্যয় বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "easy"
+      },
+      { 
+        text: "প্রাপ্য বিল আদায় হয়েছে ৭,৫০০ টাকা", 
+        debit: "Cash", 
+        credit: "Accounts Receivable", 
+        amount: 7500, 
+        reason: "Cash বৃদ্ধি (ডেবিট), Accounts Receivable সম্পদ হ্রাস (ক্রেডিট)",
+        difficulty: "easy"
+      },
+      { 
+        text: "সরবরাহকারীকে প্রদেয় বিল পরিশোধ করা হয়েছে ৯,০০০ টাকা", 
+        debit: "Accounts Payable", 
+        credit: "Cash", 
+        amount: 9000, 
+        reason: "Accounts Payable দায় হ্রাস (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "easy"
+      },
+
+      // ২৫টি কঠিন লেনদেন
+      { 
+        text: "কম্পিউটার সরঞ্জাম কেনা হয়েছে ২০,০০০ টাকা নগদে", 
+        debit: "Equipment", 
+        credit: "Cash", 
+        amount: 20000, 
+        reason: "Equipment সম্পদ বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "medium"
+      },
+      { 
+        text: "সেবা আয় অর্জিত হয়েছে ১২,০০০ টাকা নগদে", 
+        debit: "Cash", 
+        credit: "Service Revenue", 
+        amount: 12000, 
+        reason: "Cash বৃদ্ধি (ডেবিট), Service Revenue আয় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "medium"
+      },
+      { 
+        text: "ভবন ভাড়া বাবদ প্রাপ্তি ১৫,০০০ টাকা", 
+        debit: "Cash", 
+        credit: "Rental Income", 
+        amount: 15000, 
+        reason: "Cash বৃদ্ধি (ডেবিট), Rental Income আয় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "medium"
+      },
+      { 
+        text: "মজুদ পণ্যের মূল্য হ্রাস ২,০০০ টাকা", 
+        debit: "Inventory Loss", 
+        credit: "Inventory", 
+        amount: 2000, 
+        reason: "Inventory Loss ব্যয় বৃদ্ধি (ডেবিট), Inventory সম্পদ হ্রাস (ক্রেডিট)",
+        difficulty: "medium"
+      },
+      { 
+        text: "অবচয় বাবদ খরচ ৩,০০০ টাকা", 
+        debit: "Depreciation Expense", 
+        credit: "Accumulated Depreciation", 
+        amount: 3000, 
+        reason: "Depreciation Expense ব্যয় বৃদ্ধি (ডেবিট), Accumulated Depreciation বৃদ্ধি (ক্রেডিট)",
+        difficulty: "medium"
+      },
+      { 
+        text: "অগ্রিম ভাড়া প্রাপ্তি ১৮,০০০ টাকা", 
+        debit: "Cash", 
+        credit: "Unearned Revenue", 
+        amount: 18000, 
+        reason: "Cash বৃদ্ধি (ডেবিট), Unearned Revenue দায় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "medium"
+      },
+      { 
+        text: "সরবরাহ খরচ হয়েছে ১,৮০০ টাকা", 
+        debit: "Supplies Expense", 
+        credit: "Cash", 
+        amount: 1800, 
+        reason: "Supplies Expense ব্যয় বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "medium"
+      },
+      { 
+        text: "ব্যাংক সুদ প্রাপ্তি ১,২০০ টাকা", 
+        debit: "Cash", 
+        credit: "Interest Income", 
+        amount: 1200, 
+        reason: "Cash বৃদ্ধি (ডেবিট), Interest Income আয় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "medium"
+      },
+      { 
+        text: "দান বাবদ প্রদান ২,৫০০ টাকা", 
+        debit: "Donation Expense", 
+        credit: "Cash", 
+        amount: 2500, 
+        reason: "Donation Expense ব্যয় বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "medium"
+      },
+      { 
+        text: "স্টক বিক্রয় থেকে প্রাপ্তি ৫০,০০০ টাকা", 
+        debit: "Cash", 
+        credit: "Share Capital", 
+        amount: 50000, 
+        reason: "Cash বৃদ্ধি (ডেবিট), Share Capital মূলধন বৃদ্ধি (ক্রেডিট)",
+        difficulty: "medium"
+      },
+      { 
+        text: "বিনিয়োগ বিক্রয় থেকে লাভ ১০,০০০ টাকা", 
+        debit: "Cash", 
+        credit: "Gain on Sale of Investments", 
+        amount: 10000, 
+        reason: "Cash বৃদ্ধি (ডেবিট), Gain on Sale of Investments আয় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "medium"
+      },
+      { 
+        text: "ঋণপত্র প্রদান করা হয়েছে ৫,০০০ টাকা", 
+        debit: "Letter of Credit Expense", 
+        credit: "Cash", 
+        amount: 5000, 
+        reason: "Letter of Credit Expense ব্যয় বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "medium"
+      },
+      { 
+        text: "বীমা দাবি প্রাপ্তি ১৫,০০০ টাকা", 
+        debit: "Cash", 
+        credit: "Insurance Claim Receivable", 
+        amount: 15000, 
+        reason: "Cash বৃদ্ধি (ডেবিট), Insurance Claim Receivable হ্রাস (ক্রেডিট)",
+        difficulty: "medium"
+      },
+      { 
+        text: "কর্মচারী ঋণ প্রদান ৮,০০০ টাকা", 
+        debit: "Employee Loan", 
+        credit: "Cash", 
+        amount: 8000, 
+        reason: "Employee Loan সম্পদ বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "medium"
+      },
+      { 
+        text: "অগ্রিম বেতন প্রদান ১২,০০০ টাকা", 
+        debit: "Prepaid Salary", 
+        credit: "Cash", 
+        amount: 12000, 
+        reason: "Prepaid Salary সম্পদ বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "medium"
+      },
+      { 
+        text: "বিক্রয় কমিশন প্রদান ৩,৫০০ টাকা", 
+        debit: "Commission Expense", 
+        credit: "Cash", 
+        amount: 3500, 
+        reason: "Commission Expense ব্যয় বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "medium"
+      },
+      { 
+        text: "অনুমোদিত শেয়ার মূলধন বৃদ্ধি ১,০০,০০০ টাকা", 
+        debit: "No Entry", 
+        credit: "No Entry", 
+        amount: 100000, 
+        reason: "অনুমোদিত শেয়ার মূলধন একটি স্মারক অ্যাকাউন্ট, এটি লেনদেনের মাধ্যমে প্রভাবিত হয় না",
+        difficulty: "medium"
+      },
+      { 
+        text: "ইনকাম ট্যাক্স প্রদান ৭,৫০০ টাকা", 
+        debit: "Income Tax Expense", 
+        credit: "Cash", 
+        amount: 7500, 
+        reason: "Income Tax Expense ব্যয় বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "medium"
+      },
+      { 
+        text: "বিক্রয় ফেরত ২,৫০০ টাকা", 
+        debit: "Sales Returns", 
+        credit: "Accounts Receivable", 
+        amount: 2500, 
+        reason: "Sales Returns ব্যয় বৃদ্ধি (ডেবিট), Accounts Receivable হ্রাস (ক্রেডিট)",
+        difficulty: "medium"
+      },
+      { 
+        text: "ক্রয় ফেরত ১,৮০০ টাকা", 
+        debit: "Accounts Payable", 
+        credit: "Purchase Returns", 
+        amount: 1800, 
+        reason: "Accounts Payable হ্রাস (ডেবিট), Purchase Returns আয় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "medium"
+      },
+      { 
+        text: "অবস্থাপনা ফি প্রদান ৬,০০০ টাকা", 
+        debit: "Management Fee Expense", 
+        credit: "Cash", 
+        amount: 6000, 
+        reason: "Management Fee Expense ব্যয় বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "medium"
+      },
+      { 
+        text: "কনসালটেন্সি ফি প্রাপ্তি ৯,০০০ টাকা", 
+        debit: "Cash", 
+        credit: "Consulting Revenue", 
+        amount: 9000, 
+        reason: "Cash বৃদ্ধি (ডেবিট), Consulting Revenue আয় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "medium"
+      },
+      { 
+        text: "লিজ চুক্তির জন্য জমা প্রদান ২০,০০০ টাকা", 
+        debit: "Lease Deposit", 
+        credit: "Cash", 
+        amount: 20000, 
+        reason: "Lease Deposit সম্পদ বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "medium"
+      },
+      { 
+        text: "বিনিয়োগ থেকে লভ্যাংশ প্রাপ্তি ৪,৫০০ টাকা", 
+        debit: "Cash", 
+        credit: "Dividend Income", 
+        amount: 4500, 
+        reason: "Cash বৃদ্ধি (ডেবিট), Dividend Income আয় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "medium"
+      },
+      { 
+        text: "কর্মচারী প্রশিক্ষণ বাবদ খরচ ৩,২০০ টাকা", 
+        debit: "Training Expense", 
+        credit: "Cash", 
+        amount: 3200, 
+        reason: "Training Expense ব্যয় বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "medium"
+      },
+
+      // ২৫টি আরও কঠিন লেনদেন
+      { 
+        text: "বন্ড ক্রয় করা হয়েছে ৫০,০০০ টাকায়", 
+        debit: "Bond Investment", 
+        credit: "Cash", 
+        amount: 50000, 
+        reason: "Bond Investment সম্পদ বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "hard"
+      },
+      { 
+        text: "বন্ড থেকে সুদ আয় ২,৫০০ টাকা", 
+        debit: "Cash", 
+        credit: "Interest Income", 
+        amount: 2500, 
+        reason: "Cash বৃদ্ধি (ডেবিট), Interest Income আয় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "hard"
+      },
+      { 
+        text: "পেনশন ফান্ডে অবদান ৭,৫০০ টাকা", 
+        debit: "Pension Expense", 
+        credit: "Cash", 
+        amount: 7500, 
+        reason: "Pension Expense ব্যয় বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "hard"
+      },
+      { 
+        text: "গুডউইল ক্রয় ১,০০,০০০ টাকা", 
+        debit: "Goodwill", 
+        credit: "Cash", 
+        amount: 100000, 
+        reason: "Goodwill সম্পদ বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "hard"
+      },
+      { 
+        text: "রয়্যালটি প্রদান ৫,০০০ টাকা", 
+        debit: "Royalty Expense", 
+        credit: "Cash", 
+        amount: 5000, 
+        reason: "Royalty Expense ব্যয় বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "hard"
+      },
+      { 
+        text: "ফ্র্যাঞ্চাইজি ফি প্রাপ্তি ২৫,০০০ টাকা", 
+        debit: "Cash", 
+        credit: "Franchise Revenue", 
+        amount: 25000, 
+        reason: "Cash বৃদ্ধি (ডেবিট), Franchise Revenue আয় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "hard"
+      },
+      { 
+        text: "লিজ সম্পদ কেনা হয়েছে ৩,০০,০০০ টাকায়", 
+        debit: "Leased Asset", 
+        credit: "Lease Liability", 
+        amount: 300000, 
+        reason: "Leased Asset সম্পদ বৃদ্ধি (ডেবিট), Lease Liability দায় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "hard"
+      },
+      { 
+        text: "লিজ প্রদান ১৫,০০০ টাকা", 
+        debit: "Lease Liability", 
+        credit: "Cash", 
+        amount: 15000, 
+        reason: "Lease Liability হ্রাস (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "hard"
+      },
+      { 
+        text: "ডেরিভেটিভস ইনস্ট্রুমেন্ট ক্রয় ২০,০০০ টাকা", 
+        debit: "Derivatives", 
+        credit: "Cash", 
+        amount: 20000, 
+        reason: "Derivatives সম্পদ বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "hard"
+      },
+      { 
+        text: "ফরেন এক্সচেঞ্জ লস ৩,৫০০ টাকা", 
+        debit: "Foreign Exchange Loss", 
+        credit: "Accounts Payable", 
+        amount: 3500, 
+        reason: "Foreign Exchange Loss ব্যয় বৃদ্ধি (ডেবিট), Accounts Payable বৃদ্ধি (ক্রেডিট)",
+        difficulty: "hard"
+      },
+      { 
+        text: "ডিবেঞ্চার ইস্যু করা হয়েছে ২,০০,০০০ টাকায়", 
+        debit: "Cash", 
+        credit: "Debentures", 
+        amount: 200000, 
+        reason: "Cash বৃদ্ধি (ডেবিট), Debentures দায় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "hard"
+      },
+      { 
+        text: "ডিবেঞ্চারের সুদ প্রদান ৮,০০০ টাকা", 
+        debit: "Interest Expense", 
+        credit: "Cash", 
+        amount: 8000, 
+        reason: "Interest Expense ব্যয় বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "hard"
+      },
+      { 
+        text: "রিসার্চ অ্যান্ড ডেভেলপমেন্ট খরচ ১২,০০০ টাকা", 
+        debit: "R&D Expense", 
+        credit: "Cash", 
+        amount: 12000, 
+        reason: "R&D Expense ব্যয় বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "hard"
+      },
+      { 
+        text: "ইকুইটি ইনভেস্টমেন্ট ক্রয় ৭৫,০০০ টাকা", 
+        debit: "Equity Investment", 
+        credit: "Cash", 
+        amount: 75000, 
+        reason: "Equity Investment সম্পদ বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "hard"
+      },
+      { 
+        text: "ইকুইটি ইনভেস্টমেন্ট থেকে লভ্যাংশ প্রাপ্তি ৪,০০০ টাকা", 
+        debit: "Cash", 
+        credit: "Dividend Income", 
+        amount: 4000, 
+        reason: "Cash বৃদ্ধি (ডেবিট), Dividend Income আয় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "hard"
+      },
+      { 
+        text: "মার্জার খরচ ১০,০০০ টাকা", 
+        debit: "Merger Expense", 
+        credit: "Cash", 
+        amount: 10000, 
+        reason: "Merger Expense ব্যয় বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "hard"
+      },
+      { 
+        text: "অ্যাকুইজিশন খরচ ১৫,০০০ টাকা", 
+        debit: "Acquisition Expense", 
+        credit: "Cash", 
+        amount: 15000, 
+        reason: "Acquisition Expense ব্যয় বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "hard"
+      },
+      { 
+        text: "গুডউইল ইম্পেয়ারমেন্ট ২০,০০০ টাকা", 
+        debit: "Goodwill Impairment Loss", 
+        credit: "Goodwill", 
+        amount: 20000, 
+        reason: "Goodwill Impairment Loss ব্যয় বৃদ্ধি (ডেবিট), Goodwill হ্রাস (ক্রেডিট)",
+        difficulty: "hard"
+      },
+      { 
+        text: "ইনভেন্টরি রিভ্যালুয়েশন ৫,০০০ টাকা", 
+        debit: "Inventory", 
+        credit: "Revaluation Surplus", 
+        amount: 5000, 
+        reason: "Inventory সম্পদ বৃদ্ধি (ডেবিট), Revaluation Surplus বৃদ্ধি (ক্রেডিট)",
+        difficulty: "hard"
+      },
+      { 
+        text: "প্রভিশন ফর ব্যাড ডেব্টস ৩,০০০ টাকা", 
+        debit: "Bad Debt Expense", 
+        credit: "Allowance for Doubtful Accounts", 
+        amount: 3000, 
+        reason: "Bad Debt Expense ব্যয় বৃদ্ধি (ডেবিট), Allowance for Doubtful Accounts বৃদ্ধি (ক্রেডিট)",
+        difficulty: "hard"
+      },
+      { 
+        text: "ডিফার্ড ট্যাক্স অ্যাসেট ৮,০০০ টাকা", 
+        debit: "Deferred Tax Asset", 
+        credit: "Deferred Tax Benefit", 
+        amount: 8000, 
+        reason: "Deferred Tax Asset সম্পদ বৃদ্ধি (ডেবিট), Deferred Tax Benefit বৃদ্ধি (ক্রেডিট)",
+        difficulty: "hard"
+      },
+      { 
+        text: "ডিফার্ড ট্যাক্স লায়াবিলিটি ৬,০০০ টাকা", 
+        debit: "Deferred Tax Expense", 
+        credit: "Deferred Tax Liability", 
+        amount: 6000, 
+        reason: "Deferred Tax Expense ব্যয় বৃদ্ধি (ডেবিট), Deferred Tax Liability বৃদ্ধি (ক্রেডিট)",
+        difficulty: "hard"
+      },
+      { 
+        text: "অ্যাক্রুড এক্সপেন্স ৪,৫০০ টাকা", 
+        debit: "Accrued Expense", 
+        credit: "Accrued Liability", 
+        amount: 4500, 
+        reason: "Accrued Expense ব্যয় বৃদ্ধি (ডেবিট), Accrued Liability দায় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "hard"
+      },
+      { 
+        text: "প্রিপেইড রেভিনিউ ৭,০০০ টাকা", 
+        debit: "Cash", 
+        credit: "Unearned Revenue", 
+        amount: 7000, 
+        reason: "Cash বৃদ্ধি (ডেবিট), Unearned Revenue দায় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "hard"
+      },
+      { 
+        text: "রেভিনিউ রিকগনিশন ৭,০০০ টাকা", 
+        debit: "Unearned Revenue", 
+        credit: "Service Revenue", 
+        amount: 7000, 
+        reason: "Unearned Revenue হ্রাস (ডেবিট), Service Revenue আয় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "hard"
+      },
+
+      // ২৫টি অত্যন্ত কঠিন লেনদেন
+      { 
+        text: "হেজিং ইনস্ট্রুমেন্ট ক্রয় ৩০,০০০ টাকা", 
+        debit: "Hedging Instrument", 
+        credit: "Cash", 
+        amount: 30000, 
+        reason: "Hedging Instrument সম্পদ বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "expert"
+      },
+      { 
+        text: "হেজিং লস ৪,৫০০ টাকা", 
+        debit: "Hedging Loss", 
+        credit: "Hedging Instrument", 
+        amount: 4500, 
+        reason: "Hedging Loss ব্যয় বৃদ্ধি (ডেবিট), Hedging Instrument হ্রাস (ক্রেডিট)",
+        difficulty: "expert"
+      },
+      { 
+        text: "ফেয়ার ভ্যালু অ্যাডজাস্টমেন্ট ৬,০০০ টাকা", 
+        debit: "Fair Value Adjustment", 
+        credit: "Unrealized Gain", 
+        amount: 6000, 
+        reason: "Fair Value Adjustment সম্পদ বৃদ্ধি (ডেবিট), Unrealized Gain বৃদ্ধি (ক্রেডিট)",
+        difficulty: "expert"
+      },
+      { 
+        text: "কনসোলিডেশন অ্যাডজাস্টমেন্ট ১০,০০০ টাকা", 
+        debit: "Investment in Subsidiary", 
+        credit: "Non-controlling Interest", 
+        amount: 10000, 
+        reason: "Investment in Subsidiary সম্পদ বৃদ্ধি (ডেবিট), Non-controlling Interest বৃদ্ধি (ক্রেডিট)",
+        difficulty: "expert"
+      },
+      { 
+        text: "গুডউইল অ্যামরটাইজেশন ৫,০০০ টাকা", 
+        debit: "Amortization Expense", 
+        credit: "Goodwill", 
+        amount: 5000, 
+        reason: "Amortization Expense ব্যয় বৃদ্ধি (ডেবিট), Goodwill হ্রাস (ক্রেডিট)",
+        difficulty: "expert"
+      },
+      { 
+        text: "ইম্পেয়ারমেন্ট লস রিকগনিশন ৮,০০০ টাকা", 
+        debit: "Impairment Loss", 
+        credit: "Accumulated Impairment", 
+        amount: 8000, 
+        reason: "Impairment Loss ব্যয় বৃদ্ধি (ডেবিট), Accumulated Impairment বৃদ্ধি (ক্রেডিট)",
+        difficulty: "expert"
+      },
+      { 
+        text: "স্টক-বেজড কম্পেনসেশন ১২,০০০ টাকা", 
+        debit: "Compensation Expense", 
+        credit: "Additional Paid-in Capital", 
+        amount: 12000, 
+        reason: "Compensation Expense ব্যয় বৃদ্ধি (ডেবিট), Additional Paid-in Capital বৃদ্ধি (ক্রেডিট)",
+        difficulty: "expert"
+      },
+      { 
+        text: "ইকুইটি মেথড ইনভেস্টমেন্ট ৫০,০০০ টাকা", 
+        debit: "Investment in Associate", 
+        credit: "Cash", 
+        amount: 50000, 
+        reason: "Investment in Associate সম্পদ বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "expert"
+      },
+      { 
+        text: "শেয়ার অব অ্যাসোসিয়েট প্রফিট ৬,০০০ টাকা", 
+        debit: "Investment in Associate", 
+        credit: "Share of Profit of Associate", 
+        amount: 6000, 
+        reason: "Investment in Associate সম্পদ বৃদ্ধি (ডেবিট), Share of Profit of Associate আয় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "expert"
+      },
+      { 
+        text: "ফরেন কারেন্সি ট্রানজেকশন লস ৩,৫০০ টাকা", 
+        debit: "Foreign Currency Transaction Loss", 
+        credit: "Accounts Payable", 
+        amount: 3500, 
+        reason: "Foreign Currency Transaction Loss ব্যয় বৃদ্ধি (ডেবিট), Accounts Payable বৃদ্ধি (ক্রেডিট)",
+        difficulty: "expert"
+      },
+      { 
+        text: "ফরেন কারেন্সি ট্রানজেকশন গেইন ২,৫০০ টাকা", 
+        debit: "Accounts Receivable", 
+        credit: "Foreign Currency Transaction Gain", 
+        amount: 2500, 
+        reason: "Accounts Receivable সম্পদ বৃদ্ধি (ডেবিট), Foreign Currency Transaction Gain আয় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "expert"
+      },
+      { 
+        text: "ট্রেজারি স্টক ক্রয় ১৫,০০০ টাকা", 
+        debit: "Treasury Stock", 
+        credit: "Cash", 
+        amount: 15000, 
+        reason: "Treasury Stock হ্রাস (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "expert"
+      },
+      { 
+        text: "ট্রেজারি স্টক রি-ইস্যু ১৫,০০০ টাকা", 
+        debit: "Cash", 
+        credit: "Treasury Stock", 
+        amount: 15000, 
+        reason: "Cash বৃদ্ধি (ডেবিট), Treasury Stock বৃদ্ধি (ক্রেডিট)",
+        difficulty: "expert"
+      },
+      { 
+        text: "স্টক ডিভিডেন্ড ডিক্লেয়ার্ড ১০,০০০ টাকা", 
+        debit: "Retained Earnings", 
+        credit: "Dividends Payable", 
+        amount: 10000, 
+        reason: "Retained Earnings হ্রাস (ডেবিট), Dividends Payable দায় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "expert"
+      },
+      { 
+        text: "স্টক ডিভিডেন্ড ডিস্ট্রিবিউটেড ১০,০০০ টাকা", 
+        debit: "Dividends Payable", 
+        credit: "Common Stock", 
+        amount: 10000, 
+        reason: "Dividends Payable হ্রাস (ডেবিট), Common Stock বৃদ্ধি (ক্রেডিট)",
+        difficulty: "expert"
+      },
+      { 
+        text: "বন্ড প্রিমিয়াম অ্যামরটাইজেশন ১,৫০০ টাকা", 
+        debit: "Interest Expense", 
+        credit: "Bond Premium", 
+        amount: 1500, 
+        reason: "Interest Expense ব্যয় বৃদ্ধি (ডেবিট), Bond Premium হ্রাস (ক্রেডিট)",
+        difficulty: "expert"
+      },
+      { 
+        text: "বন্ড ডিস্কাউন্ট অ্যামরটাইজেশন ১,২০০ টাকা", 
+        debit: "Interest Expense", 
+        credit: "Bond Discount", 
+        amount: 1200, 
+        reason: "Interest Expense ব্যয় বৃদ্ধি (ডেবিট), Bond Discount হ্রাস (ক্রেডিট)",
+        difficulty: "expert"
+      },
+      { 
+        text: "লিজ অ্যামরটাইজেশন ৮,০০০ টাকা", 
+        debit: "Lease Amortization Expense", 
+        credit: "Leased Asset", 
+        amount: 8000, 
+        reason: "Lease Amortization Expense ব্যয় বৃদ্ধি (ডেবিট), Leased Asset হ্রাস (ক্রেডিট)",
+        difficulty: "expert"
+      },
+      { 
+        text: "ক্যাপিটাল লিজ ইন্টারেস্ট ৩,০০০ টাকা", 
+        debit: "Interest Expense", 
+        credit: "Lease Liability", 
+        amount: 3000, 
+        reason: "Interest Expense ব্যয় বৃদ্ধি (ডেবিট), Lease Liability হ্রাস (ক্রেডিট)",
+        difficulty: "expert"
+      },
+      { 
+        text: "অপারেটিং লিজ পেমেন্ট ১২,০০০ টাকা", 
+        debit: "Lease Expense", 
+        credit: "Cash", 
+        amount: 12000, 
+        reason: "Lease Expense ব্যয় বৃদ্ধি (ডেবিট), Cash হ্রাস (ক্রেডিট)",
+        difficulty: "expert"
+      },
+      { 
+        text: "ডিফার্ড রেভিনিউ রিকগনিশন ৯,০০০ টাকা", 
+        debit: "Deferred Revenue", 
+        credit: "Service Revenue", 
+        amount: 9000, 
+        reason: "Deferred Revenue হ্রাস (ডেবিট), Service Revenue আয় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "expert"
+      },
+      { 
+        text: "অ্যাক্রুড ইন্টারেস্ট রিসিভেবল ২,৫০০ টাকা", 
+        debit: "Accrued Interest Receivable", 
+        credit: "Interest Income", 
+        amount: 2500, 
+        reason: "Accrued Interest Receivable সম্পদ বৃদ্ধি (ডেবিট), Interest Income আয় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "expert"
+      },
+      { 
+        text: "অ্যাক্রুড ইন্টারেস্ট পেয়েবল ১,৮০০ টাকা", 
+        debit: "Interest Expense", 
+        credit: "Accrued Interest Payable", 
+        amount: 1800, 
+        reason: "Interest Expense ব্যয় বৃদ্ধি (ডেবিট), Accrued Interest Payable দায় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "expert"
+      },
+      { 
+        text: "প্রিভিয়াস ইয়ার অ্যাডজাস্টমেন্ট ৫,০০০ টাকা", 
+        debit: "Retained Earnings", 
+        credit: "Accounts Payable", 
+        amount: 5000, 
+        reason: "Retained Earnings হ্রাস (ডেবিট), Accounts Payable দায় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "expert"
+      },
+      { 
+        text: "প্রোভিশন ফর ওয়ারান্টি ৪,০০০ টাকা", 
+        debit: "Warranty Expense", 
+        credit: "Provision for Warranty", 
+        amount: 4000, 
+        reason: "Warranty Expense ব্যয় বৃদ্ধি (ডেবিট), Provision for Warranty দায় বৃদ্ধি (ক্রেডিট)",
+        difficulty: "expert"
+      }
+    ];
+
+    // গেম মোড সিস্টেম
+    const gameModes = {
+      beginner: { timeLimit: 0, hints: true, penalty: 0 },
+      intermediate: { timeLimit: 30, hints: false, penalty: 2 },
+      expert: { timeLimit: 15, hints: false, penalty: 5 }
+    };
+
+    // অর্জন সিস্টেম
+    const achievements = [
+      { id: 'first_correct', name: 'প্রথম সফলতা', description: 'প্রথম সঠিক উত্তর', earned: false, icon: '🥇' },
+      { id: 'perfect_5', name: 'নিখুঁত ৫', description: 'লাগাতার ৫টি সঠিক উত্তর', earned: false, icon: '⭐' },
+      { id: 'speed_demon', name: 'দ্রুতগামী', description: '৩০ সেকেন্ডের মধ্যে ৩টি উত্তর', earned: false, icon: '⚡' },
+      { id: 'accounting_pro', name: 'অ্যাকাউন্টিং বিশেষজ্ঞ', description: '৯০%+ সঠিকতা', earned: false, icon: '👑' },
+      { id: 'persistent', name: 'অধ্যবসায়ী', description: '১০টি লেনদেন সম্পন্ন', earned: false, icon: '💪' }
+    ];
+
+    // গেম ভ্যারিয়েবল
+    let score = 0;
+    let index = 0;
+    let currentMode = 'beginner';
+    let timeLeft = 0;
+    let timer;
+    let startTime;
+    let answersInTimeFrame = 0;
+
+    // অগ্রগতি ট্র্যাকিং
+    let progress = {
+      totalAttempted: 0,
+      correctAnswers: 0,
+      streak: 0,
+      bestStreak: 0,
+      transactionsCompleted: 0
+    };
+
+    // অ্যাকাউন্ট ম্যাপিং
+    const accountMap = {
+      "Cash": ["cashD", "cashC", "balCash"],
+      "Bank": ["bankD", "bankC", "balBank"],
+      "Sales": ["salesD", "salesC", ""],
+      "Rent Expense": ["rentD", "rentC", ""],
+      "Salary Expense": ["salaryD", "salaryC", ""],
+      "Office Expense": ["officeD", "officeC", ""],
+      "Capital": ["capitalD", "capitalC", "balCapital"],
+      "Furniture": ["furnitureD", "furnitureC", "balFurniture"],
+      "Accounts Receivable": ["arD", "arC", "balAR"],
+      "Accounts Payable": ["apD", "apC", "balAP"],
+      "Bank Loan": ["bankLoanD", "bankLoanC", "balBankLoan"],
+      "Vehicle": ["vehicleD", "vehicleC", "balVehicle"],
+      "Prepaid Insurance": ["prepaidInsD", "prepaidInsC", "balPrepaidIns"],
+      "Inventory": ["inventoryD", "inventoryC", "balInventory"],
+      "Service Revenue": ["serviceRevD", "serviceRevC", ""],
+      "Utilities Expense": ["utilitiesD", "utilitiesC", ""],
+      "Drawings": ["drawingsD", "drawingsC", ""],
+      "Interest Expense": ["interestExpD", "interestExpC", ""],
+      "Cost of Goods Sold": ["cogsD", "cogsC", ""],
+      "Building": ["buildingD", "buildingC", "balBuilding"],
+      "Mortgage Loan": ["mortgageD", "mortgageC", "balMortgage"],
+      "Advertising Expense": ["advertisingD", "advertisingC", ""],
+      "Equipment": ["equipmentD", "equipmentC", "balEquipment"],
+      "Rental Income": ["rentalIncD", "rentalIncC", ""],
+      "Inventory Loss": ["inventoryLossD", "inventoryLossC", ""],
+      "Depreciation Expense": ["depreciationD", "depreciationC", ""],
+      "Accumulated Depreciation": ["accDepreciationD", "accDepreciationC", ""],
+      "Unearned Revenue": ["unearnedRevD", "unearnedRevC", "balUnearnedRev"],
+      "Supplies Expense": ["suppliesD", "suppliesC", ""],
+      "Interest Income": ["interestIncD", "interestIncC", ""],
+      "Donation Expense": ["donationD", "donationC", ""],
+      "Share Capital": ["shareCapitalD", "shareCapitalC", "balShareCapital"]
+    };
+
+    // পৃষ্ঠা লোড হলে প্রথম লেনদেন দেখানো
+    document.addEventListener('DOMContentLoaded', function() {
+      loadTransaction();
+      renderAchievements();
+      updateProgressDisplay();
+      
+      // ২ সেকেন্ড পর অটো লোড (পৃষ্ঠা fully load হওয়ার জন্য)
+      setTimeout(() => {
+        loadGameData();
+        setupAutoSave();
+      }, 2000);
+    });
+
+    // গেম মোড সেট করা
+    function setGameMode(mode) {
+      currentMode = mode;
+      timeLeft = gameModes[mode].timeLimit;
+      
+      const timerSection = document.getElementById('timerSection');
+      if (gameModes[mode].timeLimit > 0) {
+        timerSection.style.display = 'block';
+        document.getElementById('timeLeft').innerText = timeLeft;
+      } else {
+        timerSection.style.display = 'none';
+      }
+      
+      resetGame();
+    }
+
+    // টাইমার শুরু করা
+    function startTimer() {
+      if (gameModes[currentMode].timeLimit > 0) {
+        clearInterval(timer);
+        timeLeft = gameModes[currentMode].timeLimit;
+        document.getElementById('timeLeft').innerText = timeLeft;
+        
+        timer = setInterval(() => {
+          timeLeft--;
+          document.getElementById('timeLeft').innerText = timeLeft;
+          if (timeLeft <= 0) {
+            clearInterval(timer);
+            handleTimeOut();
+          }
+        }, 1000);
+      }
+    }
+
+    // সময় শেষ হওয়ার হ্যান্ডলার
+    function handleTimeOut() {
+      document.getElementById("result").innerHTML = "⏰ সময় শেষ! পরবর্তী লেনদেনে যান";
+      document.getElementById("result").className = "wrong";
+      setTimeout(() => {
+        loadNextTransaction();
+      }, 2000);
+    }
+
+    // লেনদেন লোড করার ফাংশন
+    function loadTransaction() {
+      document.getElementById("transaction").innerText = transactions[index].text;
+      
+      // ড্রপডাউন রিসেট করা
+      document.getElementById("debit").value = "";
+      document.getElementById("credit").value = "";
+      
+      // সহায়তা লুকানো
+      document.getElementById("hintSection").style.display = "none";
+      
+      // টাইমার শুরু করা
+      startTimer();
+      
+      // দ্রুতগামী অর্জনের জন্য সময় ট্র্যাকিং
+      if (currentMode !== 'beginner') {
+        startTime = new Date();
+        answersInTimeFrame = 0;
+      }
+    }
+
+    // উত্তর চেক করার ফাংশন
+    function checkAnswer() {
+      const d = document.getElementById("debit").value;
+      const c = document.getElementById("credit").value;
+      const res = document.getElementById("result");
+      const tr = transactions[index];
+
+      // উত্তর চেক করা
+      const isCorrect = d === tr.debit && c === tr.credit;
+      
+      if (isCorrect) {
+        score += 10;
+        res.innerHTML = "✅ সঠিক উত্তর!";
+        res.className = "correct";
+        addJournal(tr);
+        updateAll(tr);
+        document.getElementById("transaction").classList.add("celebration");
+        
+        // দ্রুতগামী অর্জনের জন্য ট্র্যাকিং
+        if (currentMode !== 'beginner') {
+          answersInTimeFrame++;
+        }
+      } else {
+        score -= gameModes[currentMode].penalty;
+        res.innerHTML = `❌ ভুল হয়েছে!<br>সঠিক উত্তর: ডেবিট: <b>${tr.debit}</b> | ক্রেডিট: <b>${tr.credit}</b><br><i>ব্যাখ্যা: ${tr.reason}</i>`;
+        res.className = "wrong";
+      }
+
+      // অগ্রগতি আপডেট
+      updateProgress(isCorrect);
+      
+      // স্কোর আপডেট
+      document.getElementById("score").innerText = score;
+      
+      // অর্জন চেক
+      checkAchievements();
+      
+      // ৩ সেকেন্ড পর পরবর্তী লেনদেন দেখানো
+      setTimeout(() => { 
+        document.getElementById("transaction").classList.remove("celebration");
+        loadNextTransaction(); 
+        res.innerHTML = ""; 
+        res.className = ""; 
+      }, 3000);
+    }
+
+    // পরবর্তী লেনদেন লোড করা
+    function loadNextTransaction() {
+      index = (index + 1) % transactions.length;
+      progress.transactionsCompleted++;
+      loadTransaction();
+    }
+
+    // অগ্রগতি আপডেট
+    function updateProgress(isCorrect) {
+      progress.totalAttempted++;
+      if (isCorrect) {
+        progress.correctAnswers++;
+        progress.streak++;
+        if (progress.streak > progress.bestStreak) {
+          progress.bestStreak = progress.streak;
+        }
+      } else {
+        progress.streak = 0;
+      }
+      
+      updateProgressDisplay();
+    }
+
+    // অগ্রগতি প্রদর্শন আপডেট
+    function updateProgressDisplay() {
+      const accuracy = progress.totalAttempted > 0 ? 
+        Math.round((progress.correctAnswers / progress.totalAttempted) * 100) : 0;
+      
+      document.getElementById('accuracy').innerText = `${accuracy}%`;
+      document.getElementById('streak').innerText = progress.streak;
+      document.getElementById('bestStreak').innerText = progress.bestStreak;
+      document.getElementById('totalAttempted').innerText = progress.totalAttempted;
+      
+      // প্রগ্রেস বার আপডেট
+      const progressPercent = (progress.transactionsCompleted / transactions.length) * 100;
+      document.getElementById('progressFill').style.width = `${progressPercent}%`;
+    }
+
+    // অর্জন চেক
+    function checkAchievements() {
+      // প্রথম সঠিক উত্তর
+      if (progress.correctAnswers >= 1 && !achievements[0].earned) {
+        unlockAchievement(0);
+      }
+      
+      // লাগাতার ৫টি সঠিক উত্তর
+      if (progress.streak >= 5 && !achievements[1].earned) {
+        unlockAchievement(1);
+      }
+      
+      // দ্রুতগামী - ৩০ সেকেন্ডের মধ্যে ৩টি উত্তর
+      if (currentMode !== 'beginner' && answersInTimeFrame >= 3 && !achievements[2].earned) {
+        const endTime = new Date();
+        const timeDiff = (endTime - startTime) / 1000; // সেকেন্ডে
+        if (timeDiff <= 30) {
+          unlockAchievement(2);
+        }
+      }
+      
+      // ৯০%+ সঠিকতা
+      const accuracy = progress.totalAttempted > 0 ? 
+        (progress.correctAnswers / progress.totalAttempted) * 100 : 0;
+      if (accuracy >= 90 && progress.totalAttempted >= 10 && !achievements[3].earned) {
+        unlockAchievement(3);
+      }
+      
+      // ১০টি লেনদেন সম্পন্ন
+      if (progress.transactionsCompleted >= 10 && !achievements[4].earned) {
+        unlockAchievement(4);
+      }
+    }
+
+    // অর্জন আনলক
+    function unlockAchievement(index) {
+      achievements[index].earned = true;
+      showAchievementNotification(achievements[index]);
+      renderAchievements();
+    }
+
+    // অর্জন নোটিফিকেশন দেখানো
+    function showAchievementNotification(achievement) {
+      const popup = document.createElement('div');
+      popup.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: linear-gradient(135deg, #fef3c7, #fde68a);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        z-index: 1000;
+        animation: popup 2s ease-in-out;
+        border: 3px solid #f59e0b;
+        text-align: center;
+        max-width: 300px;
+      `;
+      popup.innerHTML = `
+        <div style="font-size: 48px; margin-bottom: 10px;">${achievement.icon}</div>
+        <div style="font-weight: bold; font-size: 20px; margin-bottom: 5px;">${achievement.name}</div>
+        <div style="margin-bottom: 10px;">${achievement.description}</div>
+        <p style="margin: 0; font-weight: bold;">অভিনন্দন! আপনি একটি অর্জন পেয়েছেন!</p>
+      `;
+      
+      document.body.appendChild(popup);
+      
+      // ৩ সেকেন্ড পর পপআপ মুছে ফেলা
+      setTimeout(() => {
+        document.body.removeChild(popup);
+      }, 3000);
+    }
+
+    // অর্জন রেন্ডার
+    function renderAchievements() {
+      // এই ফাংশনটি অর্জন দেখানোর জন্য (যদি UI থাকে)
+    }
+
+    // সহায়তা দেখানো
+    function showHint() {
+      const tr = transactions[index];
+      document.getElementById("hintText").innerText = tr.reason;
+      document.getElementById("hintSection").style.display = "block";
+    }
+
+    // গেম রিসেট
+    function resetGame() {
+      score = 0;
+      index = 0;
+      progress = {
+        totalAttempted: 0,
+        correctAnswers: 0,
+        streak: 0,
+        bestStreak: 0,
+        transactionsCompleted: 0
+      };
+      
+      // UI রিসেট
+      document.getElementById("score").innerText = score;
+      document.getElementById("journal").getElementsByTagName('tbody')[0].innerHTML = '';
+      document.getElementById("progressFill").style.width = '0%';
+      
+      // সমস্ত টেবিল রিসেট
+      const accountIds = ['cash', 'bank', 'sales', 'rent', 'salary', 'office', 'capital', 'furniture', 'ar', 'ap',
+                         'bankLoan', 'vehicle', 'prepaidIns', 'inventory', 'serviceRev', 'utilities', 'drawings',
+                         'interestExp', 'cogs', 'building', 'mortgage', 'advertising', 'equipment', 'rentalInc',
+                         'inventoryLoss', 'depreciation', 'accDepreciation', 'unearnedRev', 'supplies', 'interestInc',
+                         'donation', 'shareCapital'];
+      
+      accountIds.forEach(account => {
+        if (document.getElementById(`${account}D`)) {
+          document.getElementById(`${account}D`).innerText = '0';
+        }
+        if (document.getElementById(`${account}C`)) {
+          document.getElementById(`${account}C`).innerText = '0';
+        }
+      });
+      
+      // আয় বিবরণী রিসেট
+      const incomeIds = ['incSales', 'incService', 'incRental', 'incInterest', 'totalIncome',
+                        'incRent', 'incSalary', 'incOffice', 'incCOGS', 'incUtilities',
+                        'incInterestExp', 'incAdvertising', 'incSupplies', 'incDepreciation',
+                        'incDonation', 'totalExpenses', 'netProfit'];
+      
+      incomeIds.forEach(id => {
+        if (document.getElementById(id)) {
+          document.getElementById(id).innerText = '0';
+        }
+      });
+      
+      // ব্যালেন্স শীট রিসেট
+      const balanceIds = ['balCash', 'balBank', 'balFurniture', 'balAR', 'balVehicle', 'balPrepaidIns',
+                         'balInventory', 'balBuilding', 'balEquipment', 'balCapital', 'balAP', 'balBankLoan',
+                         'balMortgage', 'balUnearnedRev', 'balShareCapital', 'totalAssets', 'totalLiab'];
+      
+      balanceIds.forEach(id => {
+        if (document.getElementById(id)) {
+          document.getElementById(id).innerText = '0';
+        }
+      });
+      
+      // অগ্রগতি ডিসপ্লে রিসেট
+      updateProgressDisplay();
+      
+      // প্রথম লেনদেন লোড
+      loadTransaction();
+      
+      showNotification('🔄 গেম রিসেট করা হয়েছে!');
+    }
+
+    // জার্নালে এন্ট্রি যোগ করার ফাংশন
+    function addJournal(tr) {
+      const j = document.getElementById("journal").getElementsByTagName('tbody')[0];
+      const today = new Date().toLocaleDateString('bn-BD');
+      
+      // ডেবিট এন্ট্রি যোগ করা
+      j.innerHTML += `
+        <tr>
+          <td>${today}</td>
+          <td>${tr.debit}</td>
+          <td>${tr.amount}</td>
+          <td></td>
+        </tr>
+      `;
+      
+      // ক্রেডিট এন্ট্রি যোগ করা
+      j.innerHTML += `
+        <tr>
+          <td></td>
+          <td>${tr.credit}</td>
+          <td></td>
+          <td>${tr.amount}</td>
+        </tr>
+      `;
+    }
+
+    // সকল ফাইনান্সিয়াল স্টেটমেন্ট আপডেট করার ফাংশন
+    function updateAll(tr) {
+      // ট্রায়াল ব্যালেন্স আপডেট
+      const dID = accountMap[tr.debit] ? accountMap[tr.debit][0] : null;
+      const cID = accountMap[tr.credit] ? accountMap[tr.credit][1] : null;
+      
+      if (dID && document.getElementById(dID)) {
+        const currentValue = Number(document.getElementById(dID).innerText);
+        document.getElementById(dID).innerText = currentValue + tr.amount;
+      }
+      
+      if (cID && document.getElementById(cID)) {
+        const currentValue = Number(document.getElementById(cID).innerText);
+        document.getElementById(cID).innerText = currentValue + tr.amount;
+      }
+
+      // ব্যালেন্স শীট আপডেট
+      if (accountMap[tr.debit] && accountMap[tr.debit][2] && document.getElementById(accountMap[tr.debit][2])) {
+        const currentValue = Number(document.getElementById(accountMap[tr.debit][2]).innerText);
+        document.getElementById(accountMap[tr.debit][2]).innerText = currentValue + tr.amount;
+      }
+      
+      if (accountMap[tr.credit] && accountMap[tr.credit][2] && document.getElementById(accountMap[tr.credit][2])) {
+        const currentValue = Number(document.getElementById(accountMap[tr.credit][2]).innerText);
+        document.getElementById(accountMap[tr.credit][2]).innerText = currentValue - tr.amount;
+      }
+
+      // আয় বিবরণী আপডেট
+      if (tr.credit === "Sales" && document.getElementById("incSales")) {
+        const currentValue = Number(document.getElementById("incSales").innerText);
+        document.getElementById("incSales").innerText = currentValue + tr.amount;
+      }
+      
+      if (tr.credit === "Service Revenue" && document.getElementById("incService")) {
+        const currentValue = Number(document.getElementById("incService").innerText);
+        document.getElementById("incService").innerText = currentValue + tr.amount;
+      }
+      
+      if (tr.credit === "Rental Income" && document.getElementById("incRental")) {
+        const currentValue = Number(document.getElementById("incRental").innerText);
+        document.getElementById("incRental").innerText = currentValue + tr.amount;
+      }
+      
+      if (tr.credit === "Interest Income" && document.getElementById("incInterest")) {
+        const currentValue = Number(document.getElementById("incInterest").innerText);
+        document.getElementById("incInterest").innerText = currentValue + tr.amount;
+      }
+      
+      if (tr.debit === "Rent Expense" && document.getElementById("incRent")) {
+        const currentValue = Number(document.getElementById("incRent").innerText);
+        document.getElementById("incRent").innerText = currentValue + tr.amount;
+      }
+      
+      if (tr.debit === "Salary Expense" && document.getElementById("incSalary")) {
+        const currentValue = Number(document.getElementById("incSalary").innerText);
+        document.getElementById("incSalary").innerText = currentValue + tr.amount;
+      }
+      
+      if (tr.debit === "Office Expense" && document.getElementById("incOffice")) {
+        const currentValue = Number(document.getElementById("incOffice").innerText);
+        document.getElementById("incOffice").innerText = currentValue + tr.amount;
+      }
+      
+      if (tr.debit === "Cost of Goods Sold" && document.getElementById("incCOGS")) {
+        const currentValue = Number(document.getElementById("incCOGS").innerText);
+        document.getElementById("incCOGS").innerText = currentValue + tr.amount;
+      }
+      
+      if (tr.debit === "Utilities Expense" && document.getElementById("incUtilities")) {
+        const currentValue = Number(document.getElementById("incUtilities").innerText);
+        document.getElementById("incUtilities").innerText = currentValue + tr.amount;
+      }
+      
+      if (tr.debit === "Interest Expense" && document.getElementById("incInterestExp")) {
+        const currentValue = Number(document.getElementById("incInterestExp").innerText);
+        document.getElementById("incInterestExp").innerText = currentValue + tr.amount;
+      }
+      
+      if (tr.debit === "Advertising Expense" && document.getElementById("incAdvertising")) {
+        const currentValue = Number(document.getElementById("incAdvertising").innerText);
+        document.getElementById("incAdvertising").innerText = currentValue + tr.amount;
+      }
+      
+      if (tr.debit === "Supplies Expense" && document.getElementById("incSupplies")) {
+        const currentValue = Number(document.getElementById("incSupplies").innerText);
+        document.getElementById("incSupplies").innerText = currentValue + tr.amount;
+      }
+      
+      if (tr.debit === "Depreciation Expense" && document.getElementById("incDepreciation")) {
+        const currentValue = Number(document.getElementById("incDepreciation").innerText);
+        document.getElementById("incDepreciation").innerText = currentValue + tr.amount;
+      }
+      
+      if (tr.debit === "Donation Expense" && document.getElementById("incDonation")) {
+        const currentValue = Number(document.getElementById("incDonation").innerText);
+        document.getElementById("incDonation").innerText = currentValue + tr.amount;
+      }
+
+      // লাভ/ক্ষতি এবং ব্যালেন্স শীট আপডেট
+      updateProfitAndBalance();
+    }
+
+    // লাভ/ক্ষতি এবং ব্যালেন্স শীট আপডেট করার ফাংশন
+    function updateProfitAndBalance() {
+      // আয় বিবরণীর তথ্য সংগ্রহ
+      const sales = Number(document.getElementById("incSales").innerText) || 0;
+      const service = Number(document.getElementById("incService").innerText) || 0;
+      const rental = Number(document.getElementById("incRental").innerText) || 0;
+      const interestInc = Number(document.getElementById("incInterest").innerText) || 0;
+      
+      const rentExp = Number(document.getElementById("incRent").innerText) || 0;
+      const salary = Number(document.getElementById("incSalary").innerText) || 0;
+      const office = Number(document.getElementById("incOffice").innerText) || 0;
+      const cogs = Number(document.getElementById("incCOGS").innerText) || 0;
+      const utilities = Number(document.getElementById("incUtilities").innerText) || 0;
+      const interestExp = Number(document.getElementById("incInterestExp").innerText) || 0;
+      const advertising = Number(document.getElementById("incAdvertising").innerText) || 0;
+      const supplies = Number(document.getElementById("incSupplies").innerText) || 0;
+      const depreciation = Number(document.getElementById("incDepreciation").innerText) || 0;
+      const donation = Number(document.getElementById("incDonation").innerText) || 0;
+      
+      // মোট আয় এবং ব্যয় গণনা
+      const totalIncome = sales + service + rental + interestInc;
+      const totalExpenses = rentExp + salary + office + cogs + utilities + interestExp + advertising + supplies + depreciation + donation;
+      
+      if (document.getElementById("totalIncome")) {
+        document.getElementById("totalIncome").innerText = totalIncome;
+      }
+      if (document.getElementById("totalExpenses")) {
+        document.getElementById("totalExpenses").innerText = totalExpenses;
+      }
+      
+      // নীট লাভ/ক্ষতি গণনা
+      const profit = totalIncome - totalExpenses;
+      if (document.getElementById("netProfit")) {
+        document.getElementById("netProfit").innerText = profit;
+      }
+
+      // ব্যালেন্স শীটের তথ্য সংগ্রহ
+      const cash = Number(document.getElementById("balCash").innerText) || 0;
+      const bank = Number(document.getElementById("balBank").innerText) || 0;
+      const furniture = Number(document.getElementById("balFurniture").innerText) || 0;
+      const ar = Number(document.getElementById("balAR").innerText) || 0;
+      const vehicle = Number(document.getElementById("balVehicle").innerText) || 0;
+      const prepaidIns = Number(document.getElementById("balPrepaidIns").innerText) || 0;
+      const inventory = Number(document.getElementById("balInventory").innerText) || 0;
+      const building = Number(document.getElementById("balBuilding").innerText) || 0;
+      const equipment = Number(document.getElementById("balEquipment").innerText) || 0;
+      
+      const capital = Number(document.getElementById("balCapital").innerText) || 0;
+      const ap = Number(document.getElementById("balAP").innerText) || 0;
+      const bankLoan = Number(document.getElementById("balBankLoan").innerText) || 0;
+      const mortgage = Number(document.getElementById("balMortgage").innerText) || 0;
+      const unearnedRev = Number(document.getElementById("balUnearnedRev").innerText) || 0;
+      const shareCapital = Number(document.getElementById("balShareCapital").innerText) || 0;
+
+      // মোট সম্পদ গণনা
+      const totalAssets = cash + bank + furniture + ar + vehicle + prepaidIns + inventory + building + equipment;
+      if (document.getElementById("totalAssets")) {
+        document.getElementById("totalAssets").innerText = totalAssets;
+      }
+      
+      // মোট দায় ও মূলধন গণনা
+      const totalLiab = capital + shareCapital + profit - ap - bankLoan - mortgage - unearnedRev;
+      if (document.getElementById("totalLiab")) {
+        document.getElementById("totalLiab").innerText = totalLiab;
+      }
+    }
+
+    // ফলাফল শেয়ার করা
+    function shareResults() {
+      const report = generateReport();
+      const shareText = `আমি অ্যাকাউন্টিং গেমে ${report.score} পয়েন্ট অর্জন করেছি! ${report.accuracy}% সঠিকতা সহ ${report.totalTransactions}টি লেনদেন সম্পন্ন করা হয়েছে।`;
+      
+      if (navigator.share) {
+        navigator.share({
+          title: 'আমার অ্যাকাউন্টিং গেম রিপোর্ট',
+          text: shareText
+        });
+      } else {
+        // ফলব্যাক: টেক্সট কপি করার অপশন
+        navigator.clipboard.writeText(shareText);
+        showNotification('📋 রিপোর্ট কপি করা হয়েছে! আপনি এখন এটি শেয়ার করতে পারেন।');
+      }
+    }
+
+    // রিপোর্ট জেনারেটর
+    function generateReport() {
+      const accuracy = progress.totalAttempted > 0 ? 
+        Math.round((progress.correctAnswers / progress.totalAttempted) * 100) : 0;
+        
+      const report = {
+        date: new Date().toLocaleDateString('bn-BD'),
+        score: score,
+        accuracy: accuracy,
+        totalTransactions: progress.totalAttempted,
+        bestStreak: progress.bestStreak
+      };
+      
+      return report;
+    }
+
+    // ডেটা সেভ/লোড ফাংশনগুলো
+    function saveGameData() {
+      const gameData = {
+        score: score,
+        progress: progress,
+        achievements: achievements,
+        currentMode: currentMode,
+        index: index,
+        // জার্নাল এন্ট্রিগুলো সংরক্ষণ
+        journalEntries: document.getElementById('journal').getElementsByTagName('tbody')[0].innerHTML,
+        // ট্রায়াল ব্যালেন্সের ডেটা
+        trialBalance: {
+          cashD: document.getElementById('cashD').innerText,
+          cashC: document.getElementById('cashC').innerText,
+          bankD: document.getElementById('bankD').innerText,
+          bankC: document.getElementById('bankC').innerText,
+          salesD: document.getElementById('salesD').innerText,
+          salesC: document.getElementById('salesC').innerText,
+          rentD: document.getElementById('rentD').innerText,
+          rentC: document.getElementById('rentC').innerText,
+          salaryD: document.getElementById('salaryD').innerText,
+          salaryC: document.getElementById('salaryC').innerText,
+          officeD: document.getElementById('officeD').innerText,
+          officeC: document.getElementById('officeC').innerText,
+          capitalD: document.getElementById('capitalD').innerText,
+          capitalC: document.getElementById('capitalC').innerText,
+          furnitureD: document.getElementById('furnitureD').innerText,
+          furnitureC: document.getElementById('furnitureC').innerText,
+          arD: document.getElementById('arD').innerText,
+          arC: document.getElementById('arC').innerText,
+          apD: document.getElementById('apD').innerText,
+          apC: document.getElementById('apC').innerText
+        },
+        // আয় বিবরণী ডেটা
+        incomeStatement: {
+          incSales: document.getElementById('incSales').innerText,
+          incRent: document.getElementById('incRent').innerText,
+          incSalary: document.getElementById('incSalary').innerText,
+          incOffice: document.getElementById('incOffice').innerText,
+          netProfit: document.getElementById('netProfit').innerText
+        },
+        // ব্যালেন্স শীট ডেটা
+        balanceSheet: {
+          balCash: document.getElementById('balCash').innerText,
+          balBank: document.getElementById('balBank').innerText,
+          balFurniture: document.getElementById('balFurniture').innerText,
+          balAR: document.getElementById('balAR').innerText,
+          balCapital: document.getElementById('balCapital').innerText,
+          balAP: document.getElementById('balAP').innerText,
+          totalAssets: document.getElementById('totalAssets').innerText,
+          totalLiab: document.getElementById('totalLiab').innerText
+        }
+      };
+      
+      localStorage.setItem('accountingGameData', JSON.stringify(gameData));
+      showNotification('💾 গেম ডেটা সংরক্ষণ করা হয়েছে!');
+    }
+
+    function loadGameData() {
+      const savedData = localStorage.getItem('accountingGameData');
+      if (savedData) {
+        const gameData = JSON.parse(savedData);
+        
+        // মৌলিক ডেটা লোড
+        score = gameData.score;
+        progress = gameData.progress || progress;
+        achievements = gameData.achievements || achievements;
+        currentMode = gameData.currentMode || currentMode;
+        index = gameData.index || index;
+        
+        // জার্নাল এন্ট্রি লোড
+        if (gameData.journalEntries) {
+          document.getElementById('journal').getElementsByTagName('tbody')[0].innerHTML = gameData.journalEntries;
+        }
+        
+        // ট্রায়াল ব্যালেন্স লোড
+        if (gameData.trialBalance) {
+          document.getElementById('cashD').innerText = gameData.trialBalance.cashD;
+          document.getElementById('cashC').innerText = gameData.trialBalance.cashC;
+          document.getElementById('bankD').innerText = gameData.trialBalance.bankD;
+          document.getElementById('bankC').innerText = gameData.trialBalance.bankC;
+          // ... অন্যান্য অ্যাকাউন্টগুলো একইভাবে
+        }
+        
+        // আয় বিবরণী লোড
+        if (gameData.incomeStatement) {
+          document.getElementById('incSales').innerText = gameData.incomeStatement.incSales;
+          document.getElementById('incRent').innerText = gameData.incomeStatement.incRent;
+          document.getElementById('incSalary').innerText = gameData.incomeStatement.incSalary;
+          document.getElementById('incOffice').innerText = gameData.incomeStatement.incOffice;
+          document.getElementById('netProfit').innerText = gameData.incomeStatement.netProfit;
+        }
+        
+        // ব্যালেন্স শীট লোড
+        if (gameData.balanceSheet) {
+          document.getElementById('balCash').innerText = gameData.balanceSheet.balCash;
+          document.getElementById('balBank').innerText = gameData.balanceSheet.balBank;
+          document.getElementById('balFurniture').innerText = gameData.balanceSheet.balFurniture;
+          document.getElementById('balAR').innerText = gameData.balanceSheet.balAR;
+          document.getElementById('balCapital').innerText = gameData.balanceSheet.balCapital;
+          document.getElementById('balAP').innerText = gameData.balanceSheet.balAP;
+          document.getElementById('totalAssets').innerText = gameData.balanceSheet.totalAssets;
+          document.getElementById('totalLiab').innerText = gameData.balanceSheet.totalLiab;
+        }
+        
+        // UI আপডেট
+        document.getElementById('score').innerText = score;
+        updateProgressDisplay();
+        setGameMode(currentMode);
+        loadTransaction();
+        
+        showNotification('📂 পূর্বের ডেটা লোড করা হয়েছে!');
+      }
+    }
+
+    function clearGameData() {
+      if (confirm('আপনি কি নিশ্চিত যে আপনি সমস্ত গেম ডেটা ডিলিট করতে চান? এটি পূর্বের অগ্রগতি মুছে ফেলবে।')) {
+        localStorage.removeItem('accountingGameData');
+        showNotification('🗑️ সমস্ত ডেটা ডিলিট করা হয়েছে!');
+        setTimeout(() => {
+          location.reload();
+        }, 2000);
+      }
+    }
+
+    // ডেটা এক্সপোর্ট/ইম্পোর্ট ফাংশন
+    function exportData() {
+      const gameData = localStorage.getItem('accountingGameData');
+      if (!gameData) {
+        showNotification('❌ কোন সেভ করা ডেটা পাওয়া যায়নি!');
+        return;
+      }
+      
+      const blob = new Blob([gameData], {type: 'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `accounting_game_data_${new Date().toLocaleDateString('bn-BD')}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showNotification('📁 ডেটা এক্সপোর্ট করা হয়েছে!');
+    }
+
+    function importData() {
+      document.getElementById('importFile').click();
+    }
+
+    function handleFileImport(files) {
+      if (files.length === 0) return;
+      
+      const file = files[0];
+      const reader = new FileReader();
+      
+      reader.onload = function(e) {
+        try {
+          const importedData = JSON.parse(e.target.result);
+          
+          // ভ্যালিডেশন চেক
+          if (!importedData.score && !importedData.progress) {
+            throw new Error('অবৈধ ডেটা ফাইল');
+          }
+          
+          localStorage.setItem('accountingGameData', e.target.result);
+          showNotification('✅ ডেটা সফলভাবে ইম্পোর্ট হয়েছে!');
+          setTimeout(() => {
+            location.reload();
+          }, 1500);
+          
+        } catch (error) {
+          showNotification('❌ ডেটা ফাইলটি বৈধ নয়!');
+        }
+      };
+      
+      reader.readAsText(file);
+    }
+
+    // অটো-সেভ সিস্টেম সেটআপ
+    function setupAutoSave() {
+      // প্রতি ৩০ সেকেন্ডে অটো সেভ
+      setInterval(saveGameData, 30000);
+      
+      // পেজ আনলোড হওয়ার আগে সেভ
+      window.addEventListener('beforeunload', saveGameData);
+    }
+
+    // নোটিফিকেশন দেখানোর ফাংশন
+    function showNotification(message) {
+      const notification = document.createElement('div');
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #10b981;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        z-index: 10000;
+        font-weight: bold;
+        animation: slideIn 0.3s ease;
+      `;
+      notification.textContent = message;
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.remove();
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
